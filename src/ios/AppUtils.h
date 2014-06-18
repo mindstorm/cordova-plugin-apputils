@@ -1,5 +1,5 @@
 //
-//  AUIdleTimer.h
+//  AppUtils.h
 //
 //  The MIT License
 //
@@ -26,10 +26,8 @@
 
 #import <Cordova/CDV.h>
 
-@interface AUIdleTimer : CDVPlugin
+@interface AppUtils : CDVPlugin
 
-- (void) enable:(CDVInvokedUrlCommand*)command;
-
-- (void) disable:(CDVInvokedUrlCommand*)command;
+- (void) IdleTimer:(CDVInvokedUrlCommand*)command;
 
 @end

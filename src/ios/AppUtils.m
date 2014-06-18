@@ -1,5 +1,5 @@
 //
-//  AUIdleTimer.m
+//  AppUtils.m
 //
 //  The MIT License
 //
@@ -24,42 +24,33 @@
 //  SOFTWARE.
 //
 
-#import "AUIdleTimer.h"
+#import "AppUtils.h"
 
-@implementation AUIdleTimer
+@implementation AppUtils
 
-- (void)enable:(CDVInvokedUrlCommand *)command
+- (void)IdleTimer:(CDVInvokedUrlCommand *)command
 {
     CDVPluginResult* pluginResult = nil;
-
-    // Acquire a reference to the local UIApplication singleton
+    NSMutableDictionary *options = [command.arguments objectAtIndex:0];
     UIApplication* app = [UIApplication sharedApplication];
-
-    if( [app isIdleTimerDisabled] ) {
-        [app setIdleTimerDisabled:false];
-        
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-    } else {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageToErrorObject:1];
-    }
-
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-}
-
-
-- (void)disable:(CDVInvokedUrlCommand *)command
-{
-    CDVPluginResult* pluginResult = nil;
+    NSString *action = [options objectForKey:@"action"];
     
-    // Acquire a reference to the local UIApplication singleton
-    UIApplication* app = [UIApplication sharedApplication];
-
-    if( ![app isIdleTimerDisabled] ) {
-        [app setIdleTimerDisabled:true];
-        
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-    } else {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageToErrorObject:1];
+    if ([action isEqualToString: @"enable"]) {
+        if( [app isIdleTimerDisabled] ) {
+            [app setIdleTimerDisabled:false];
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+        } else {
+            // Error 1 - IdleTimer already enabled
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageToErrorObject:1];
+        }
+    } else if ([action isEqualToString: @"disable"]) {
+        if( ![app isIdleTimerDisabled] ) {
+            [app setIdleTimerDisabled:true];
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+        } else {
+            // Error 1 - IdleTimer already disabled
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageToErrorObject:1];
+        }
     }
 
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
