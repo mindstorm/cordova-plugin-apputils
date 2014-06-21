@@ -51,7 +51,32 @@
             // Error 1 - IdleTimer already disabled
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageToErrorObject:1];
         }
+    } else if ([action isEqualToString: @"status"]) {
+        if( [app isIdleTimerDisabled] ) {
+            // disabled
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsInt:0];
+        } else {
+            // enabled
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsInt:1];
+        }
     }
+
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
+- (void)BundleInfo:(CDVInvokedUrlCommand *)command
+{
+    CDVPluginResult* pluginResult = nil;
+
+    NSDictionary *info =    [NSDictionary dictionaryWithObjectsAndKeys:
+                            [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"], @"bundleVersion",
+                            [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"], @"bundleBuild",
+                            [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"], @"bundleId",
+                            [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"], @"bundleDisplayName",
+                            [[NSLocale preferredLanguages] objectAtIndex:0], @"localeLanguage",
+                            nil];
+        
+    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:info.JSONString];
 
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }

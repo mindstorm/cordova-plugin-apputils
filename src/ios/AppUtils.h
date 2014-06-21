@@ -29,5 +29,6 @@
 @interface AppUtils : CDVPlugin
 
 - (void) IdleTimer:(CDVInvokedUrlCommand*)command;
+- (void) BundleInfo:(CDVInvokedUrlCommand*)command;
 
 @end
