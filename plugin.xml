@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" id="at.mindstorm.cordova.apputils" version="0.1.0">
-    <name>App Utils</name>
-    <author>Paul Cervenka</author>
-    <description>Cordova App Utils Plugin: IdleTimer</description>
-    <keywords>utils, timer, idle, idletimer</keywords>
-    <engines>
-        <engine name="cordova" version=">=3.0.0" />
-    </engines>
-    <js-module src="www/apputils.js" name="AppUtils">
-        <clobbers target="apputils" />
-    </js-module>
-    <platform name="ios">
-        <config-file target="config.xml" parent="/*">
-            <feature name="AppUtils">
-                <param name="ios-package" value="AppUtils" />
-            </feature>
-        </config-file>
-        <header-file src="src/ios/AppUtils.h" />
-        <source-file src="src/ios/AppUtils.m" />
-    </platform>
+	<name>AppUtils</name>
+	<author>Paul Cervenka</author>
+	<description>Cordova App Utils Plugin: IdleTimer, BundleInfo, OpenWith</description>
+	<keywords>utils, timer, idle, idletimer, bundleinfo, bundle, openwith</keywords>
+	<engines>
+		<engine name="cordova" version=">=3.0.0" />
+	</engines>
+	<js-module src="www/apputils.js" name="AppUtils">
+		<clobbers target="apputils" />
+	</js-module>
+	<platform name="ios">
+		<config-file target="config.xml" parent="/*">
+			<feature name="AppUtils">
+				<param name="ios-package" value="AppUtils" />
+			</feature>
+		</config-file>
+		<header-file src="src/ios/AppUtils.h" />
+		<source-file src="src/ios/AppUtils.m" />
+	</platform>
 </plugin>
