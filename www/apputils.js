@@ -1,9 +1,29 @@
 /* global require, module */
 
-var exec = require("cordova/exec");
+var exec = require("cordova/exec"),
+	channel = require('cordova/channel'),
+	utils = require('cordova/utils');
+
+channel.createSticky('onAppUtilsReady');
+// Tell cordova channel to wait on the AppUtilsReady event
+channel.waitForInitialization('onAppUtilsReady');
 
 var AppUtils = function () {
-	this.name = "AppUtils";
+	var me = this;
+
+	me.name = "AppUtils";
+	me.version = "0.1.0";
+
+	channel.onCordovaReady.subscribe(function () {
+		me.BundleInfo(function (info) {
+			me.info = info;
+			channel.onAppUtilsReady.fire();
+		}, function (e) {
+			me.info = false;
+			utils.alert("[ERROR] Error initializing Cordova: " + e);
+		});
+	});
+
 };
 
 // IdleTimer
