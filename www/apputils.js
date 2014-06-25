@@ -40,17 +40,17 @@ AppUtils.prototype.IdleTimer = {
 		};
 		exec(onSuccess, onError, "AppUtils", "IdleTimer", [options]);
 	},
-	status: function (onSuccess, onError) {
+	getStatus: function (onSuccess) {
 		var options = {
 			"action": "status"
 		};
-		exec(onSuccess, onError, "AppUtils", "IdleTimer", [options]);
+		exec(onSuccess, null, "AppUtils", "IdleTimer", [options]);
 	}
 };
 
 // BundleInfo
-AppUtils.prototype.BundleInfo = function (onSuccess, onError) {
-	exec(onSuccess, onError, "AppUtils", "BundleInfo", []);
+AppUtils.prototype.BundleInfo = function (onSuccess) {
+	exec(onSuccess, null, "AppUtils", "BundleInfo", []);
 };
 
 // OpenWith
