@@ -5,7 +5,8 @@ var exec = require("cordova/exec"),
 	utils = require('cordova/utils');
 
 channel.createSticky('onAppUtilsReady');
-// Tell cordova channel to wait on the AppUtilsReady event
+
+// tell cordova channel to wait on the AppUtilsReady event
 channel.waitForInitialization('onAppUtilsReady');
 
 var AppUtils = function () {
