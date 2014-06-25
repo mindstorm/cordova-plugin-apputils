@@ -29,9 +29,11 @@
 @interface AppUtils : CDVPlugin
 
 @property (nonatomic, strong) UIDocumentInteractionController *controller;
+@property (nonatomic, strong) UIPopoverController *popover;
 
 - (void) IdleTimer:(CDVInvokedUrlCommand*)command;
 - (void) BundleInfo:(CDVInvokedUrlCommand*)command;
 - (void) OpenWith:(CDVInvokedUrlCommand*)command;
+- (void) SocialShare:(CDVInvokedUrlCommand*)command;
 
 @end

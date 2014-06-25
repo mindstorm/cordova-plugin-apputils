@@ -29,6 +29,7 @@
 @implementation AppUtils
 
 @synthesize controller;
+@synthesize popover;
 
 - (void)IdleTimer:(CDVInvokedUrlCommand *)command
 {
@@ -89,7 +90,6 @@
 
 - (void)OpenWith:(CDVInvokedUrlCommand *)command
 {
-
     NSMutableDictionary *options = [command.arguments objectAtIndex:0];
     CDVViewController* cont = (CDVViewController*)[ super viewController ];
     
@@ -142,6 +142,124 @@
             [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
         });
     });
+}
+
+- (void) SocialShare:(CDVInvokedUrlCommand *)command
+{
+    NSMutableDictionary *options = [command.arguments objectAtIndex:0];
+    NSString* text = [options objectForKey:@"text"];
+    NSString *url = [options objectForKey:@"url"];
+    
+    CDVViewController* cont = (CDVViewController*)[ super viewController ];
+    NSMutableArray *activityItems = [NSMutableArray arrayWithCapacity:10];
+
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+
+            CDVPluginResult* pluginResult = nil;
+            
+            if (text || (url && url.length > 0)) {
+            
+                // Text
+                if (text) {
+                    NSLog(@"[social] text: %@", text);
+                    [activityItems addObject:text];
+                }
+           
+                // File-URL
+                if (url && url.length > 0) {
+                    NSURL* absoluteURL = [[NSURL URLWithString:url relativeToURL:[self.webView.request URL]] absoluteURL];
+                    
+                    // check if file exists
+                    if ([[NSFileManager defaultManager] fileExistsAtPath:absoluteURL.path]) {
+                        NSLog(@"[social] url: %@", absoluteURL.path);
+                        [activityItems addObject:absoluteURL];
+                    } else {
+                        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                                                                                     [NSNumber numberWithInt:2], @"code",
+                                                                                                                     @"File not found.", @"reason", nil]];
+                    }
+                }
+
+                if (!pluginResult) {
+
+                    // ViewController
+                    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
+
+                    // excluded
+                    NSArray *excluded = [options objectForKey:@"excluded"];
+                    NSMutableArray *excludedActivityTypes = [NSMutableArray arrayWithCapacity:10];
+                    if (excluded) {
+                        for (NSNumber *item in excluded) {
+                            switch (item.intValue) {
+                                case 1:
+                                    [excludedActivityTypes addObject:UIActivityTypePostToFacebook];
+                                    break;
+                                case 2:
+                                    [excludedActivityTypes addObject:UIActivityTypePostToTwitter];
+                                    break;
+                                case 3:
+                                    [excludedActivityTypes addObject:UIActivityTypePostToWeibo];
+                                    break;
+                                case 4:
+                                    [excludedActivityTypes addObject:UIActivityTypeMessage];
+                                    break;
+                                case 5:
+                                    [excludedActivityTypes addObject:UIActivityTypeMail];
+                                    break;
+                                case 6:
+                                    [excludedActivityTypes addObject:UIActivityTypePrint];
+                                    break;
+                                case 7:
+                                    [excludedActivityTypes addObject:UIActivityTypeCopyToPasteboard];
+                                    break;
+                                case 8:
+                                    [excludedActivityTypes addObject:UIActivityTypeAssignToContact];
+                                    break;
+                                case 9:
+                                    [excludedActivityTypes addObject:UIActivityTypeSaveToCameraRoll];
+                                    break;
+                            }
+                        }
+                        activityViewController.excludedActivityTypes = excludedActivityTypes;
+                    }
+                    
+                    // Coordinates
+                    int left = [[options objectForKey:@"left"] intValue],
+                    top = [[options objectForKey:@"top"] intValue],
+                    width = [[options objectForKey:@"width"] intValue],
+                    height = [[options objectForKey:@"height"] intValue];
+
+                    if (!left && !top && !width && !height) {
+ 
+                        // modal
+                        [self.viewController presentViewController:activityViewController animated:YES completion:nil];
+                        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+                    }  else {
+
+                        // popover
+                        CGRect rect = CGRectMake(left, top, width, height);
+                        NSLog(@"[social] rect: left %i, top:%i, width:%i, height:%i", left, top, width, height);
+                        
+                        self.popover = [[UIPopoverController alloc] initWithContentViewController:activityViewController];
+                        [self.popover presentPopoverFromRect:rect inView:cont.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+                        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+                    }
+                    
+                }
+                
+            } else {
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                                                                             [NSNumber numberWithInt:1], @"code",
+                                                                                                             @"Empty parameter.", @"reason", nil]];
+            }
+            
+            [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+            
+        });
+    });
+    
 }
 
 @end

@@ -58,4 +58,9 @@ AppUtils.prototype.OpenWith = function (onSuccess, onError, options) {
 	exec(onSuccess, onError, "AppUtils", "OpenWith", [options]);
 };
 
+// SocialShare
+AppUtils.prototype.SocialShare = function (onSuccess, onError, options) {
+	exec(onSuccess, onError, "AppUtils", "SocialShare", [options]);
+};
+
 module.exports = new AppUtils();
