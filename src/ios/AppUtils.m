@@ -136,7 +136,7 @@
             } else {
                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:[NSDictionary dictionaryWithObjectsAndKeys:
                                                                                                              [NSNumber numberWithInt:1], @"code",
-                                                                                                             @"Empty parameter.", @"reason", nil]];
+                                                                                                             @"Empty URL.", @"reason", nil]];
             }
 
             [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
