@@ -104,6 +104,9 @@ Social Share Function from the build-in Social.framework
 				excluded: 1: Facebook, 2: Twitter, 3: Weibo, 4: Message, 5: Mail, 6: Print, 7: Copy to Pasteboard, 8: Assign To Contact, 9: Save to Camera Roll
 		*/
 
+## Supported Platforms
+iOS
+
 ## Version History
 
 ### 0.1.0 (2014-06)
