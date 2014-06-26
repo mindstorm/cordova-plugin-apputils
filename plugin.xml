@@ -2,8 +2,8 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" id="at.mindstorm.cordova.apputils" version="0.1.0">
 	<name>AppUtils</name>
 	<author>Paul Cervenka</author>
-	<description>Cordova App Utils Plugin: IdleTimer, BundleInfo, OpenWith</description>
-	<keywords>utils, timer, idle, idletimer, bundleinfo, bundle, openwith</keywords>
+	<description>Cordova App Utils Plugin: IdleTimer, BundleInfo, OpenWith, SocialShare</description>
+	<keywords>utils, timer, idle, idletimer, bundleinfo, bundle, openwith, social, share</keywords>
 	<engines>
 		<engine name="cordova" version=">=3.0.0" />
 	</engines>
