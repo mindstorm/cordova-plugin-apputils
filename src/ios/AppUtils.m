@@ -96,6 +96,8 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 
         NSString* url = [options objectForKey:@"url"];
+        NSString* uti = [options objectForKey:@"uti"];
+        NSMutableDictionary* annotation = [options objectForKey:@"annotation"];
 
         dispatch_async(dispatch_get_main_queue(), ^{
             
@@ -110,6 +112,12 @@
                     NSLog(@"[openwith] url: %@", absoluteURL.path);
                     
                     self.controller = [UIDocumentInteractionController interactionControllerWithURL:absoluteURL];
+                    if (uti != nil) {
+                        self.controller.UTI = uti;
+                    }
+                    if (annotation != nil) {
+                        self.controller.annotation = annotation;
+                    }
                     
                     // rect coordinates from options
                     int left = [options objectForKey:@"left"] != nil ? [[options objectForKey:@"left"] intValue]: 0;

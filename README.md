@@ -70,7 +70,9 @@ Open local files in an other app on the device.
 				{ code: 3, reason: "Unknown filetype." }
 			options:
 				{
+                    annotation: <MAP>,
 					url: <STRING>,
+                    uti: <STRING>,
 					left: <INT>,
 					top: <INT>,
 					width: <INT>,
