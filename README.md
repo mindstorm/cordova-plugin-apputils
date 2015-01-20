@@ -1,11 +1,11 @@
-cordova-plugin-app-utils
+cordova-plugin-apputils
 ========================
 
 Cordova AppUtils Plugin for Apache Cordova >= 3.0.0
 
 ## Installation
 
-    cordova plugin add https://github.com/mindstorm/cordova-plugin-app-utils.git
+    cordova plugin add https://github.com/mindstorm/cordova-plugin-apputils.git
     
 ## AppUtils
 
