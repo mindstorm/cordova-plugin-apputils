@@ -1,19 +1,19 @@
 /* global require, module */
 
 var exec = require("cordova/exec"),
-	channel = require('cordova/channel'),
-	utils = require('cordova/utils');
+	channel = require("cordova/channel"),
+	utils = require("cordova/utils");
 
-channel.createSticky('onAppUtilsReady');
+channel.createSticky("onAppUtilsReady");
 
 // tell cordova channel to wait on the AppUtilsReady event
-channel.waitForInitialization('onAppUtilsReady');
+channel.waitForInitialization("onAppUtilsReady");
 
 var AppUtils = function () {
 	var me = this;
 
 	me.name = "AppUtils";
-	me.version = "0.1.0";
+	me.version = "1.0.0";
 
 	channel.onCordovaReady.subscribe(function () {
 		me.BundleInfo(function (info) {

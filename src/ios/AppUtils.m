@@ -81,7 +81,10 @@
                               [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"], @"bundleBuild",
                               [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"], @"bundleId",
                               [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"], @"bundleDisplayName",
-                              [[NSLocale preferredLanguages] objectAtIndex:0], @"localeLanguage", nil];
+                              [[NSLocale preferredLanguages] objectAtIndex:0], @"localeLanguage",
+                              [[[NSBundle mainBundle] infoDictionary] objectForKey:@"envStage"], @"envStage",
+                              nil];
+        
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:info];
         
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];

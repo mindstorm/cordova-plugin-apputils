@@ -111,5 +111,8 @@ iOS
 
 ## Version History
 
+### 1.0.0 (2015-06)
+* BundleInfo: Reads the key "envStage" from Info.plist.
+
 ### 0.1.0 (2014-06)
 * initial version
